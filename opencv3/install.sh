@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# Pass X11 session variables to allow GUI work inside the container
+# Pass X11 session variables to allow GUI access from the container
 XSOCK=/tmp/.X11-unix
 XAUTH=/tmp/.docker.xauth
 touch $XAUTH

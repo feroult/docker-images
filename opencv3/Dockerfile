@@ -4,9 +4,11 @@
 # To build:
 # docker build -t fradelg/opencv3 .
 #
-# To run a container based on the image, allowing GUI access:
+# To run a container based on the image, allowing GUI access (unsecured way):
+# xhost +
 # docker run --rm -ti -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY fradelg/opencv3
 #
+# For a secure access method use the install.sh script
 
 FROM ubuntu:15.04
 MAINTAINER Francisco Javier Delgado del Hoyo "frandelhoyo@gmail.com"
@@ -42,8 +44,5 @@ RUN make -j2
 RUN make install
 RUN make clean
 
-RUN mkdir -p /home/developer
-USER developer
-ENV HOME /home/developer
 WORKDIR /usr/local/share/OpenCV/samples/python2
 CMD /bin/bash
