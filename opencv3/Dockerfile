@@ -28,10 +28,16 @@ RUN apt-get -y install python3-dev python3-tk python3-numpy
 RUN apt-get -y install libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libeigen3-dev
 RUN apt-get -y autoremove && apt-get -y clean
 
+# Checkout OpenCV contrib
+WORKDIR /usr/local/src
+RUN git clone https://github.com/Itseez/opencv_contrib
+RUN git checkout 3.1.0
+
 # Compile OpenCV master branch from sources
 WORKDIR /usr/local/src
 RUN git clone https://github.com/Itseez/opencv.git
 WORKDIR opencv
+RUN git checkout 3.1.0
 RUN mkdir build
 WORKDIR build
 RUN cmake -D CMAKE_BUILD_TYPE=RELEASE \
@@ -39,6 +45,7 @@ RUN cmake -D CMAKE_BUILD_TYPE=RELEASE \
           -D BUILD_TESTS=OFF \
           -D BUILD_EXAMPLES=ON \
           -D INSTALL_C_EXAMPLES=ON \
+          -D OPENCV_EXTRA_MODULES_PATH=/usr/local/src/opencv_contrib/modules \
           -D INSTALL_PYTHON_EXAMPLES=ON ..
 RUN make -j2
 RUN make install
