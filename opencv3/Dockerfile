@@ -30,15 +30,15 @@ RUN apt-get -y autoremove && apt-get -y clean
 
 # Checkout OpenCV contrib
 WORKDIR /usr/local/src
-RUN git clone https://github.com/Itseez/opencv_contrib
+RUN git clone --branch 3.0.0 https://github.com/Itseez/opencv_contrib
 WORKDIR opencv_contrib
-RUN git checkout 3.0.0
+RUN rm -rf .git
 
 # Compile OpenCV master branch from sources
 WORKDIR /usr/local/src
-RUN git clone https://github.com/Itseez/opencv.git
+RUN git clone --branch 3.0.0 https://github.com/Itseez/opencv.git
 WORKDIR opencv
-RUN git checkout 3.0.0
+RUN rm -rf .git
 RUN mkdir build
 WORKDIR build
 RUN cmake -D CMAKE_BUILD_TYPE=RELEASE \
